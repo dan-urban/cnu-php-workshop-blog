@@ -90,7 +90,7 @@ class Users implements CrudInterface
     public function create(RecordInterface $record)
     {
         if (!$record instanceof User) {
-            throw new Exception('');
+            throw new Exception('Record must be an instance of class User');
         }
 
         try {
@@ -126,7 +126,7 @@ class Users implements CrudInterface
     public function update(RecordInterface $record)
     {
         if (!$record instanceof User) {
-            throw new Exception('');
+            throw new Exception('Record must be an instance of class User');
         }
 
         if (!$record->getId()) {
@@ -134,7 +134,12 @@ class Users implements CrudInterface
         }
 
         try {
+            $id = $record->getId();
+            $name = $record->getName();
+            $surname = $record->getSurname();
+            $email = $record->getEmail();
             $password = $record->getPassword();
+            $updated_at = date("Y-m-d H:i:s");
 
             if ($password) {
                 $query = $this->database->prepare("UPDATE users SET password = :password WHERE id = :id");
@@ -148,12 +153,6 @@ class Users implements CrudInterface
             $query = $this->database->prepare(
                 "UPDATE users SET name = :name, surname = :surname, email = :email, updated_at = :updated_at WHERE id = :id"
             );
-
-            $id = $record->getId();
-            $name = $record->getName();
-            $surname = $record->getSurname();
-            $email = $record->getEmail();
-            $updated_at = date("Y-m-d H:i:s");
 
             $query->bindParam(':name', $name);
             $query->bindParam(':surname', $surname);
@@ -175,7 +174,7 @@ class Users implements CrudInterface
     public function delete(RecordInterface $record)
     {
         if (!$record instanceof User) {
-            throw new Exception('');
+            throw new Exception('Record must be an instance of class User');
         }
 
         if (!$record->getId()) {
