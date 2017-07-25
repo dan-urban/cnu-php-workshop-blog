@@ -26,7 +26,6 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $password =
     $user = new User(
         $_POST['name'],
         $_POST['surname'],
